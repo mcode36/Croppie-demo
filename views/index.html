@@ -29,7 +29,8 @@ from: http://foliotek.github.io/Croppie/#documentation
             min-width: 30px;
             min-height: 30px;
             border: 1px dashed grey;
-            border-radius: 10px;;
+            border-radius: 10px;
+            ;
             padding: 10px;
             float: left;
         }
@@ -39,13 +40,13 @@ from: http://foliotek.github.io/Croppie/#documentation
 
 <body>
     <div class="container">
-        <div id="upload-demo"></div>
+        <div id="source-img"></div>
         <div class="result-container">
             <div>
-                <img id="target-img" alt="Theme Image" src="/public/blank_25x25.jpg">
+                <img id="target-img" alt="Cropped Image" src="/public/blank_25x25.jpg">
             </div>
             <div>
-                <button class="upload-result">Update Crop Result</button>
+                <button id="btn-update">Update Crop Result</button>
             </div>
         </div>
 
@@ -54,25 +55,25 @@ from: http://foliotek.github.io/Croppie/#documentation
 
     <script>
         $(document).ready(function () {
-
-            var $uploadCrop = $('#upload-demo');
-            $uploadCrop.croppie({
+            const src_img = $('#source-img');
+            src_img.croppie({
                 viewport: {
                     width: 150,
                     height: 150,
                     type: 'square'
                 },
                 boundary: {
-                    width: 300,
-                    height: 300
-                }
+                   width: 300,
+                   height: 300
+                },
+                enableResize: true
             });
-            $uploadCrop.croppie('bind', '/public/dog.jpg');
+            src_img.croppie('bind', '/public/dog.jpg');
 
-            $('.upload-result').on('click', function (ev) {
-                $uploadCrop.croppie('result', {
+            $('#btn-update').on('click', function (ev) {
+                src_img.croppie('result', {
                     type: 'canvas',
-                    size: 'original'
+                    size: 'viewport'
                 }).then(function (resp) {
                     document.getElementById("target-img").src = resp;
                 });
